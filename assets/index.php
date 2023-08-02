@@ -80,8 +80,8 @@
         </div><!-- end navbar -->
         <main class="px-16 py-10 bg-gray-100 md:col-span-2">
             <div class="flex md:justify-center sm:justify-center">
-                <a href="login_page/login.html" class="text-yellow-700 btn border-yellow-600 md:border-2 hover:bg-yellow-600 hover:text-white transition ease-in duration-500">Log in</a>
-                <a href="signup_page/singup.html" class="text-yellow-700 ml-2 btn border-yellow-600 md:border-2 hover:bg-yellow-600 hover:text-white transition ease-in duration-500">Sign up</a>
+                <a href="login_page/login.php" class="text-yellow-700 btn border-yellow-600 md:border-2 hover:bg-yellow-600 hover:text-white transition ease-in duration-500">Log in</a>
+                <a href="signup_page/singup.php" class="text-yellow-700 ml-2 btn border-yellow-600 md:border-2 hover:bg-yellow-600 hover:text-white transition ease-in duration-500">Sign up</a>
             </div>
             <header>
                 <h2 class="text-gray-800 text-6xl font-semibold">Recipes</h2>

@@ -23,7 +23,7 @@
                 </div>
                 <ul class="text-sm mt-6 hidden md:block" id="menu">
                     <li  class="text-gray-600 font-bold border-r-4 border-white">
-                        <a href="index.html" class="px-4 flex justify-end">
+                        <a href="index.php" class="px-4 flex justify-end">
                             <span>Home</span>
                             <svg class="w-5 ml-2" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" stroke-linecap="round" stroke-linejoin="round"></path>
