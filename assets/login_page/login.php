@@ -1,3 +1,74 @@
+<?php 
+    //require('../../controleur/C_SignUp.php');
+    try{
+        $pdo=new PDO('mysql: host=localhost','root','');
+        $pdo->exec('CREATE DATABASE ninjafood');
+    }
+    catch(PDOException $e){
+        die("Connection failed". $e->getMessage());
+    }
+    try{
+        $pdo=new PDO('mysql: host=localhost;dbname=ninjafood','root','');
+    }
+    catch(PDOException $e){
+        die("Connection failed". $e->getMessage());
+    }
+    if(isset($_POST['submit'])){
+        if(isset($_POST['nom'],$_POST['email'],$_POST['password'])){
+            if($_POST['nom'] != '' && $_POST['email'] != '' && $_POST['password'] != ''){
+                $nom=$_POST['nom'];
+                $mail=$_POST['email'];
+                $password=$_POST['password'];
+                // admin password
+                // $password_admin='admin';
+
+                // if($_POST['password'] == $password_admin){
+                //     $req = $pdo->prepare("INSERT INTO user(nom,email,password) VALUES(?,?,?)");
+                //     $req->execute(array(
+                //         $_POST['nom'],
+                //         $_POST['email'],
+                //         'admin'
+                //     )); 
+                //     header('Location:../owner.php');
+                //     echo "bonjour";
+                // }
+                // else{
+                    if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$_POST['email'])){
+                        $query = $pdo->prepare("INSERT INTO user(nom,email,password) VALUES(:nom,:email,:password)");
+                        $query->execute(array(
+                            'nom' => $nom,
+                            'email' => $mail,
+                            'password' => $password
+                        )); 
+                        if($query == true){
+                            // echo "Informations bien enregistrées";
+                            header('Location:../login_page/login.php');
+                        }
+                        else{
+                            echo "<script>
+
+                            alert('L'enregistrement n'a pas pu être effectué'); 
+        
+                            </script>";
+                        }
+                    }                   
+                    else{
+                        echo "<script>
+
+                        alert('Veuillez taper un vrai adresse email'); 
+    
+                        </script>";
+                    }
+                }
+            //}
+            else{
+                echo "<script>
+                alert('Veuillez compléter tous les champs'); 
+                </script>";   
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,7 +163,7 @@
                     <p class="mt-5 text-xs border-b border-gray-500 py-6">Forgot your password ?</p>
                     <div class="mt-3 flex justify-between text-xs items-center">
                         <p>You don't have an account ?</p>
-                        <button class="py-2 px-5 bg-white border rounded-xl hover:shadow-inner transform hover:scale-110 transition ease-in duration-500"><a href="../signup_page/singup.html">Register</a></button>
+                        <button class="py-2 px-5 bg-white border rounded-xl hover:shadow-inner transform hover:scale-110 transition ease-in duration-500"><a href="../signup_page/singup.php">Register</a></button>
                     </div>
 
                 </div>

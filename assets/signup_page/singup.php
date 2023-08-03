@@ -1,4 +1,75 @@
-<?php require('../../controleur/C_SignUp.php'); ?>
+<?php 
+    //require('../../controleur/C_SignUp.php');
+    try{
+        $pdo=new PDO('mysql: host=localhost','root','');
+        $pdo->exec('CREATE DATABASE ninjafood');
+    }
+    catch(PDOException $e){
+        die("Connection failed". $e->getMessage());
+    }
+    try{
+        $pdo=new PDO('mysql: host=localhost;dbname=ninjafood','root','');
+    }
+    catch(PDOException $e){
+        die("Connection failed". $e->getMessage());
+    }
+    if(isset($_POST['submit'])){
+        if(isset($_POST['nom'],$_POST['email'],$_POST['password'])){
+            if($_POST['nom'] != '' && $_POST['email'] != '' && $_POST['password'] != ''){
+                $nom=$_POST['nom'];
+                $mail=$_POST['email'];
+                $password=$_POST['password'];
+                // admin password
+                // $password_admin='admin';
+
+                // if($_POST['password'] == $password_admin){
+                //     $req = $pdo->prepare("INSERT INTO user(nom,email,password) VALUES(?,?,?)");
+                //     $req->execute(array(
+                //         $_POST['nom'],
+                //         $_POST['email'],
+                //         'admin'
+                //     )); 
+                //     header('Location:../owner.php');
+                //     echo "bonjour";
+                // }
+                // else{
+                    if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$_POST['email'])){
+                        $query = $pdo->prepare("INSERT INTO user(nom,email,password) VALUES(:nom,:email,:password)");
+                        $query->execute(array(
+                            'nom' => $nom,
+                            'email' => $mail,
+                            'password' => $password
+                        )); 
+                        if($query == true){
+                            // echo "Informations bien enregistrées";
+                            header('Location:../login_page/login.php');
+                        }
+                        else{
+                            echo "<script>
+
+                            alert('L'enregistrement n'a pas pu être effectué'); 
+        
+                            </script>";
+                        }
+                    }                   
+                    else{
+                        echo "<script>
+
+                        alert('Veuillez taper un vrai adresse email'); 
+    
+                        </script>";
+                    }
+                }
+            //}
+            else{
+                echo "<script>
+                alert('Veuillez compléter tous les champs'); 
+                </script>";   
+            }
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +137,7 @@
                     <h2 class="font-bold text-2xl text-yellow-700">Sign up</h2>
                     <p class="text-sm mt-4 text-yellow-700">If you are not a member, register</p>
 
-                    <form class="flex flex-col gap-4" action="">
+                    <form class="flex flex-col gap-4" action="" method="post">
                         <input class="p-2 mt-8 rounded-xl" type="text" name="nom" placeholder="Name">
                         <input class="p-2 rounded-xl" type="text" name="email" placeholder="Email">
                         <div class="relative">
@@ -76,11 +147,10 @@
                                 <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                             </svg>
                         </div>
-                        <input type="file" class="p-2 rounded-xl w-full" name="image" placeholder="Choose a file" >
-                        <button class="bg-yellow-700 rounded-xl text-white py-2 hover:shadow-inner transform hover:scale-110 transition ease-in duration-500" name="submit">Sign up</button>
+                        <button class="bg-yellow-700 rounded-xl text-white py-2 hover:shadow-inner transform hover:scale-110 transition ease-in duration-500" name="submit" type="submit">Sign up</button>
                         <div class="mt-3 flex justify-between text-xs items-center">
                             <p>Already a member ?</p>
-                            <button class="py-2 px-5 bg-white border rounded-xl hover:shadow-inner transform hover:scale-110 transition ease-in duration-500"><a href="../login_page/login.html"> login</a></button>
+                            <button class="py-2 px-5 bg-white border rounded-xl hover:shadow-inner transform hover:scale-110 transition ease-in duration-500"><a href="../login_page/login.php"> login</a></button>
                         </div>
                     </form>
                 </div>
