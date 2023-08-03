@@ -7,9 +7,10 @@
     <title>about us</title>
     <link rel="stylesheet" href="dist/style.css">
     <link rel="stylesheet" href="myStyle.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body class="text-gray-700 font-mono">
-    <div class="grid md:grid-cols-3">
+<div class="grid md:grid-cols-3">
         <div class="md:col-span-1 md:flex justify-end">
             <nav class="text-right">
                 <div class="flex justify-between items-center">
@@ -32,7 +33,7 @@
                         </a>
                     </li>
                     <li class="border-r-4 border-yellow-500">
-                        <a href="about.php" class="px-4 flex justify-end mt-2" >
+                        <a href="about.php" class="px-4 flex justify-end mt-2">
                             <span>About</span>
                             <svg class="w-5 ml-2" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -57,7 +58,7 @@
                         </a>
 
                     </li>
-                    <li class="border-r-4 border-white" onclick="borderRight()">
+                    <li class="border-r-4 border-white">
                         <a href="owner.php" class="px-4 flex justify-end mt-2">
                             <span>Owner</span>
                             <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -79,5 +80,43 @@
                 </ul>
             </nav>
         </div>
+        <main class="px-16 py-10 bg-gray-100 md:col-span-2">
+            <div class="flex md:justify-center sm:justify-center">
+                    <header>
+                        <h2 class="text-gray-800 text-6xl font-semibold mt-5">Who are we?</h2>
+                    </header>
+            </div>
+            <div class="grid md:grid-cols-3">
+                <div class="md:col-span-1 mt-10">
+                    <p class="m-4">
+                        <h3 class="font-bold">I'm Sammy Wasukundi samBro <br> Sudent of Uniluk L2 Computer sciences</h3>
+                        Please contact us using these contact details including facebook, gmail, twitter and more.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Possimus, rem! Deserunt delectus aspernatur veniam placeat.
+                            Soluta assumenda voluptates,
+                            contact details
+                    </p>
+                    <div class="flex justify-center px-4 mt-10">
+                        <ul class="font-bold">
+                            <li>
+                                <span>+243999576452</span>
+                            </li>
+                            <li>
+                                <span>brosammy1et2@gmail.com</span>
+                            </li>
+                            <li>
+                                <span>@Mrsammy2002</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <img src="img/others/s.png" alt="chiny.me" class="w-2">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="index.js"></script>
 </body>
 </html>
