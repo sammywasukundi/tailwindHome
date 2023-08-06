@@ -1,3 +1,86 @@
+<?php
+    //session_start();
+    // try{
+    //     $pdo=new PDO('mysql: host=localhost','root','');
+    //     $pdo->exec('CREATE DATABASE ninjafood');
+    // }
+    // catch(PDOException $e){
+    //     die("Connection failed". $e->getMessage());
+    // }
+    try{
+        $pdo=new PDO('mysql: host=localhost;dbname=ninjafood','root','');
+    }
+    catch(PDOException $e){
+        die("Connection failed". $e->getMessage());
+    }
+    if(isset($_POST['submit'])){
+        if(isset($_POST['title'],$_POST['cooker'])){
+            if($_POST['title'] != '' && $_POST['cooker'] != ''){
+                $title=$_POST['title'];
+                $cooker=$_POST['cooker'];
+
+                if(isset($_FILES['image']) AND $_FILES['image']['error'] == 0){
+                    // verifions la taille du fichier
+                    if($_FILES['image']['size'] < 5000000)
+                    {
+                        // stockons le nom du fichier dans une variable
+                        $nom_fichier = pathinfo($_FILES['image']['name']);
+                        // récuperons l'extension du fichier
+                        $recup_extension =  $nom_fichier['extension'];
+                        // définissons les extensions autorisées
+                        $extensions =array('zip','png','rar','iso','jpg','JPG','PNG','jpeg');
+                        // verifions si l'extension du fichier uploader est autorisé
+                        if(in_array($recup_extension,$extensions)){
+                            // deplaçons le fichier vers notre serveur
+                            if(move_uploaded_file($_FILES['image']['tmp_name'],'profiles/'.basename($_FILES['image']['name'])))
+                            {
+                                $req = $pdo->prepare("INSERT INTO recipes(title,name,image) VALUES(:title,:name,:image)");
+                                $req->execute(array(
+                                    'title' => $title,
+                                    'name' => $cooker,
+                                    'image' => $_FILES['image']['name']
+                                ));                         
+                                if($req == true){
+                                    // echo "<script>
+
+                                    // alert('recipe saved successfuly'); 
+                
+                                    // </script>"; 
+                                    //echo 'bien';  
+                                    header('Location:login_page/login.php');                                         }
+                                else{
+                                    echo "<script>
+
+                                    alert('Registration could not be completed'); 
+                
+                                    </script>";
+                                }                   
+                            }
+                        }else{
+                            echo "<script>
+
+                            alert('extension not allowed'); 
+        
+                            </script>";
+                        }
+                    }else
+                    {
+                        echo "<script>
+
+                        alert('Large file'); 
+    
+                        </script>";
+                    }
+                }
+            }
+            else{
+                echo "<script>
+                alert('Veuilez completer tous les champs'); 
+                </script>";
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +89,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>about us</title>
     <link rel="stylesheet" href="dist/style.css">
+    <link rel="stylesheet" href="myStyle.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body class="text-gray-700 font-mono">
     <div class="grid md:grid-cols-3">
@@ -71,13 +157,82 @@
                             <span>Logout</span>
                             <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>
-                              
+                            </svg>                        
                         </a>
                     </li>
                 </ul>
             </nav>
         </div>
+        <main class="px-16 py-10 bg-gray-100 md:col-span-2">
+            <div class="flex md:justify-center sm:justify-center">
+                <header>
+                    <h2 class="text-gray-800 text-6xl font-semibold">My recipes</h2>
+                </header>
+            </div>
+            <div class="grid md:grid-cols-3">
+                <div class="md:col-span-1 mt-16">
+                    <div class="flex flex-col gap-4">
+                        <button id="add_recipe" class="bg-yellow-700 rounded-xl text-white hover:shadow-inner transform hover:scale-110 transition ease-in duration-500 font-bold px-12 py-2">Add to my recipes</button>   
+                    </div>
+                    <!-- form of adding recipe -->
+                    <form class="flex flex-col gap-4" action="" method="post" id="formulaire" enctype="multipart/form-data">
+                        <input class="p-2 mt-8 rounded-xl" type="text" name="title" placeholder="Title">
+                        <input class="p-2 rounded-xl" type="text" name="cooker" placeholder="Cooker">
+                        <!-- <input class="p-2 rounded-xl" type="time" name="time" placeholder="Time of posting"> -->
+                        <input class="p-2 rounded-xl w-full" type="file" name="image" placeholder="Image">
+                        <button class="bg-yellow-700 rounded-xl text-white py-2 hover:shadow-inner transform hover:scale-110 transition ease-in duration-500 font-bold" name="submit" type="submit">Add to my recipe's list</button>
+                    </form>
+                </div>
+                <div class="md:col-span-2 mt-8 m-28">
+                    <div class="md:w-32 lg:w-72 sm:flex justify-center w-32 flex flex-row gap-4 mt-20 card hover:shadow-lg transition ease-in duration-300 h-60">
+                        <img src="img/recipes/1615916524567.jpeg" alt="description" id="id_image" class="w-full object-cover">
+                    </div>
+                    <!-- <video width="320" height="240" autoplay>
+                        <source src=”https://www.google.com/search?client=firefox-b-d&sxsrf=AB5stBgWA7H-T68ki2W9Ovxfwje-tGXmPQ:1691274434740&q=cooker&tbm=vid&source=lnms&sa=X&ved=2ahUKEwiT2JmfyMaAAxXVTaQEHbdpBWsQ0pQJegQICBAB&biw=1366&bih=635&dpr=1#fpstate=ive&vld=cid:bcc98cf2,vid:Xkbb6pBOYKg” type=video/ogg>
+                    </video>                 -->
+                </div>
+            </div>
+                <div class="mt-8 border-t border-gray-700">
+                    <!-- cards yeah-->
+                </div>
+                <div class="flex justify-center">
+                    <div class=" btn bg-slate-300 text-black hover:shadow-inner transform hover:scale-110 hover:bg-slate-400 transition ease-in duration-500 mt-8">Load more</div>
+                </div>
+        </main>
     </div>
+    <script type="text/javascript">
+        const add_recipe = document.querySelector('#add_recipe');
+        const hidden_recipe = document.querySelector('#formulaire');
+        add_recipe.addEventListener('click', function(){
+            if(getComputedStyle(hidden_recipe).visibility != 'visible'){
+            hidden_recipe.style.visibility='visible';
+            }else{
+            hidden_recipe.style.visibility='hidden';
+            }
+        })
+
+        function pictures(){
+            setTimeout("pictures()",20);
+            document.getElementById("id_image").src="img/recipes/"+image[im%3];
+            try{
+                document.getElementById("id_image").filters.alpha.opacity=op*100;
+            }
+            catch(e){
+                document.getElementById("id_image").style.opacity=op;
+            }
+            if(sop=="cr"){
+                op+=0.02;
+                if(op>2)
+                    sop="dcr";
+            }
+            if(sop=="dcr"){
+                op-=0.02;
+                if(op<=0){
+                    sop="cr";
+                    im+=1;
+                }
+            }
+        }
+    </script>
 </body>
 </html>

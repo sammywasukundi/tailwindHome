@@ -1,13 +1,13 @@
 <?php 
     //require('../../controleur/C_SignUp.php');
     session_start();
-    try{
-        $pdo=new PDO('mysql: host=localhost','root','');
-        $pdo->exec('CREATE DATABASE ninjafood');
-    }
-    catch(PDOException $e){
-        die("Connection failed". $e->getMessage());
-    }
+    // try{
+    //     $pdo=new PDO('mysql: host=localhost','root','');
+    //     $pdo->exec('CREATE DATABASE ninjafood');
+    // }
+    // catch(PDOException $e){
+    //     die("Connection failed". $e->getMessage());
+    // }
     try{
         $pdo=new PDO('mysql: host=localhost;dbname=ninjafood','root','');
     }

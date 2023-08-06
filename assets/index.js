@@ -36,3 +36,13 @@ function album(){
       }
    }
 }
+// js of recipes pages
+const add_recipe = document.querySelector('#add_recipe');
+const hidden_recipe = document.querySelector('#formulaire');
+add_recipe.addEventListener('click', function(){
+    if(getComputedStyle(hidden_recipe).visibility != 'visible'){
+      hidden_recipe.style.visibility='visible';
+    }else{
+      hidden_recipe.style.visibility='hidden';
+    }
+})
