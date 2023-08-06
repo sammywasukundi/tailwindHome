@@ -10,7 +10,7 @@ burger.addEventListener('click' ,() => {
 })
 
 // images defilentes 
-image=new Array("img_cuisine.jpg","img_cuisine3.jpg","img_cuisine4.jpg");
+image=new Array("recipe1.jpg","recipe2.jpg","recipe3.jpg");
 im=0;
 op=0;
 sop="cr";

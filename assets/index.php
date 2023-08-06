@@ -1,3 +1,11 @@
+<?php
+    try{
+        $pdo=new PDO('mysql: host=localhost;dbname=ninjafood','root','');
+    }
+    catch(PDOException $e){
+        die("Connection failed". $e->getMessage());
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,13 +99,17 @@
                 <h4 class="font-bold mt-10 pb-4 border-b border-gray-700">Latest Recipes</h4>
                 <div class="grid lg:grid-cols-1 gap-6">
                     <div class="mt-10 card hover:shadow-lg transition ease-in duration-300 border-x-slate-100">
-                        <img src="img/img_cuisine.jpg" alt="description" id="idImage" class="w-1 h-28 sm:h-36 object-center">
+                        <img src="img/recipe1.jpg" alt="description" id="idImage" class="w-1 h-28 sm:h-36 object-center">
                     </div>
                 </div>
+                <div class="flex justify-start ">
+                    <h2 class="mt-8 text-center font-bold">Most popular</h2>  
+                </div>
                 <div class="mt-8 grid lg:grid-cols-3 gap-10">
+
                     <div class="card hover:shadow-lg transition ease-in duration-300 transform hover:scale-110 border-x-slate-300">
                         <!-- cards -->
-                        <img src="img/img_cuisine.jpg" alt="cuisine" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                        <img src="img/recipes/img_cuisine.jpg" alt="cuisine" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
                         <div class="m-4">
                             <span class="font-bold">5 bean chilli stews</span>
                             <span class="block text-zink-500 text-sm mb-4">Recipe by mario</span>
@@ -126,7 +138,7 @@
                     </div>
                     <div class="card hover:shadow-lg transition ease-in duration-300 transform hover:scale-110 border-x-slate-300">
                         <!-- cards -->
-                        <img src="img/img_cuisine3.jpg" alt="cuisinier" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                        <img src="img/recipes/img_cuisine3.jpg" alt="cuisinier" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
                         <div class="m-4">
                             <span class="font-bold">5 bean cooker very nice</span>
                             <span class="block text-zink-500 text-sm">Recipe by mario</span>
@@ -155,7 +167,7 @@
                     </div>
                     <div class="card hover:shadow-lg transition ease-in duration-300 transform hover:scale-110 border-x-slate-300">
                         <!-- cards -->
-                        <img src="img/img_cuisine4.jpg" alt="cuisinier 3" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                        <img src="img/recipes/img_cuisine4.jpg" alt="cuisinier 3" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
                         <div class="m-4">
                             <span class="font-bold">A cooker man</span>
                             <span class="block text-zink-500 text-sm">Recipe by mario</span>
@@ -183,15 +195,23 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="flex justify-start ">
+                    <h2 class="mt-8 text-center font-bold">Adding recently</h2>  
                 </div>
 
                 <div class="mt-8 grid lg:grid-cols-3 gap-10">
+                    <?php
+                        $affich = $pdo->query("SELECT * FROM recipes");
+                        $d=1;
+                        while($res = $affich->fetch()){
+                    ?>
                     <div class="card hover:shadow-lg transition ease-in duration-300 transform hover:scale-110 border-x-slate-300">
                         <!-- cards -->
-                        <img src="img/recipes/pizza_pockets_09013_16x9.jpg" alt="cuisine" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
+                        <img src="img/recipes/<?php echo $res['image'];  ?>" alt="cuisine" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
                         <div class="m-4">
-                            <span class="font-bold">5 bean chilli stews</span>
-                            <span class="block text-zink-500 text-sm">Recipe by mario</span>
+                            <span class="font-bold"><?php echo $res['title'];  ?></span>
+                            <span class="block text-zink-500 text-sm"><?php echo 'Recipe by '.$res['name'];  ?></span>
                         </div>
                         <div class="flex m-4">                            
                             <button class=" btn flex bg-yellow-700 rounded-xl text-yellow-500 py-2 hover:shadow-xl transform hover:scale-110 transition ease-in duration-500">
@@ -212,70 +232,16 @@
                             <svg class="w-5 inline-block" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            <span>25 mins</span>
+                            <span><?php echo $res['time'];  ?></span>
                         </div>
                     </div>
-                    <div class="card hover:shadow-lg transition ease-in duration-300 transform hover:scale-110 border-x-slate-300">
-                        <!-- cards -->
-                        <img src="img/recipes/Pepperoni-Pizza-Pockets-gog-1.jpg" alt="cuisinier" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
-                        <div class="m-4">
-                            <span class="font-bold">5 bean cooker very nice</span>
-                            <span class="block text-zink-500 text-sm">Recipe by mario</span>
-                        </div>
-                        <div class="flex m-4">                            
-                            <button class=" btn flex bg-yellow-700 rounded-xl text-yellow-500 py-2 hover:shadow-xl transform hover:scale-110 transition ease-in duration-500">
-                                <span>Add</span>  
-                                <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>                                 
-                            </button>
-                            <button class="btn flex bg-yellow-700 rounded-xl text-yellow-500 py-2 hover:shadow-xl transform hover:scale-110 transition ease-in duration-500">
-                                <span>See</span> 
-                                <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>                                  
-                            </button>
-                        </div>
-                        <div class="badge">
-                            <svg class="w-5 inline-block" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                            <span>25 mins</span>
-                        </div>
-                    </div>
-                    <div class="card hover:shadow-lg transition ease-in duration-300 transform hover:scale-110 border-x-slate-300 mt-4">
-                        <!-- cards -->
-                        <img src="img/recipes/1615916524567.jpeg" alt="cuisinier 3" class="w-full h-40 sm:h-48 lg:h-56 object-cover">
-                        <div class="m-4">
-                            <span class="font-bold">A cooker man</span>
-                            <span class="block text-zink-500 text-sm">Recipe by mario</span>
-                        </div>
-                        <div class="flex m-4">                            
-                            <button class=" btn flex bg-yellow-700 rounded-xl text-yellow-500 py-2 hover:shadow-xl transform hover:scale-110 transition ease-in duration-500">
-                                <span>Add</span>  
-                                <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>                                 
-                            </button>
-                            <button class="btn flex bg-yellow-700 rounded-xl text-yellow-500 py-2 hover:shadow-xl transform hover:scale-110 transition ease-in duration-500">
-                                <span>See</span> 
-                                <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>                                  
-                            </button>
-                        </div>
-                        <div class="badge">
-                            <svg class="w-5 inline-block" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                            <span>25 mins</span>
-                        </div>
-                    </div>
-
+                    <?php
+                        ++$d;
+                    }
+                    ?> 
+ 
                 </div>
-                <h4 class="font-bold mt-10 pb-4 border-b border-gray-700">Most popular</h4>
+                <h4 class="font-bold mt-10 pb-4 border-b border-gray-700">samBro design</h4>
                 <div class="mt-8">
                     <!-- cards yeah-->
                 </div>

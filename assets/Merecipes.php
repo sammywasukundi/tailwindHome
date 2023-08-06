@@ -41,13 +41,12 @@
                                     'image' => $_FILES['image']['name']
                                 ));                         
                                 if($req == true){
-                                    // echo "<script>
-
-                                    // alert('recipe saved successfuly'); 
-                
-                                    // </script>"; 
+                                    //  
                                     //echo 'bien';  
-                                    header('Location:login_page/login.php');                                         }
+                                    //header('Location:login_page/login.php');
+                                    echo "<script>
+                                        alert('recipe saved successfuly');               
+                                    </script>";                                         }
                                 else{
                                     echo "<script>
 
@@ -194,9 +193,41 @@
             </div>
                 <div class="mt-8 border-t border-gray-700">
                     <!-- cards yeah-->
+                    <h2 class="text-center font-bold mt-4">List of my recipes</h2>
                 </div>
-                <div class="flex justify-center">
-                    <div class=" btn bg-slate-300 text-black hover:shadow-inner transform hover:scale-110 hover:bg-slate-400 transition ease-in duration-500 mt-8">Load more</div>
+                <div class="md:col-span-3 mt-5">
+                    <!-- <div class=" btn bg-slate-300 text-black hover:shadow-inner transform hover:scale-110 hover:bg-slate-400 transition ease-in duration-500 mt-8">Load more</div> -->
+                    <table class="table-fixed ">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="w-1/4">Title</th>
+                                <th class="w-1/4">Cooker</th>
+                                <th class="w-1/4">Action</th>
+                                <th class="w-1/4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                
+                                require('delete.php');
+                                $recup =$pdo->query("SELECT * from recipes ");
+                                $d = 1;
+                                while($donnees=$recup->fetch()){
+                                    ?> 
+                                    <tr>
+                                    <td>
+                                        <td class="flex justify-center"> <?php echo $donnees['title'] ; ?> </td>
+                                        <td class="text-center"> <?php echo $donnees['name'];  ?> </td>
+                                        <td class="text-center"><button type="submit" class="bg-yellow-700 rounded-xl text-white py-2 px-3 hover:shadow-inner transform hover:scale-105 transition ease-in duration-500 font-bold"><a href="delete.php?id=<?php echo $donnees['id'] ; ?> ">Delete</a></button></td>
+                                        <td class="text-center"><button type="submit" class="bg-yellow-700 rounded-xl text-white py-2 px-3 hover:shadow-inner transform hover:scale-105 transition ease-in duration-500 font-bold">Modify</button></td>                                      
+                                    </tr>
+                                    <?php
+                                    ++$d;
+                                }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
         </main>
     </div>
