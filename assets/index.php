@@ -5,6 +5,7 @@
     catch(PDOException $e){
         die("Connection failed". $e->getMessage());
     }
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +95,7 @@
             <header>
                 <h2 class="text-gray-800 text-6xl font-semibold">Recipes</h2>
                 <h3 class="text-3xl font-semibold">For ninjas</h3>
+                <h3><?php echo 'Hello '.$_SESSION['nom'].' '.'You are connected'; ?></h3>
             </header>
             <div>
                 <h4 class="font-bold mt-10 pb-4 border-b border-gray-700">Latest Recipes</h4>

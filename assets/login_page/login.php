@@ -27,16 +27,18 @@
                 ));
                 $result = $req->fetch();
                 if($result){
-                    $_SESSION['id'] = $result['id'];
-                    $_SESSION['nom'] = $result['nom'];
-                    $_SESSION['password'] = $result['password'];
-                    $_SESSION['email'] = $result['email'];
-                    header('Location:../index.php');
-                    exit;
-                    echo 'Bonjour  '.$_SESSION['nom'].' '.'Vous êtes connectés';
-                }
-                else{
-                    echo 'Mauvais identifiant ou mot de passe !';  
+                    if($nom == $_POST['nom'] && $password == $_POST['password']){
+                        //$_SESSION['id'] = $result['id'];
+                        $_SESSION['nom'] = $nom;
+                        $_SESSION['password'] = $password;
+                        //$_SESSION['logged'] = true;
+                        header('Location:../index.php');
+                        
+                        echo 'Bonjour  '.$_SESSION['nom'].' '.'Vous êtes connectés';                        
+                    }
+                    else{
+                        echo 'Mauvais identifiant ou mot de passe !';  
+                    }
                 }
             }else{
                 echo "<script>
